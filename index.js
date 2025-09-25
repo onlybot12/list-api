@@ -23,11 +23,11 @@ MongoClient.connect(MONGODB_URI)
   .catch((error) => console.error("MongoDB connection error:", error))
 
 // Routes
-app.get("/", (req, res) => {
+app.get("/add/admin", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "dashboard.html"))
 })
 
-app.get("/list", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"))
 })
 
