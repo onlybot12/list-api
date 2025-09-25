@@ -133,7 +133,7 @@
         // Fetch APIs from MongoDB
         async function fetchApis() {
             try {
-                const response = await fetch('/api/apis');
+                const response = await fetch('/api/api');
                 if (response.ok) {
                     whatsappApis = await response.json();
                     filteredApis = [...whatsappApis];
