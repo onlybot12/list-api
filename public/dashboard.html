@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tambah API WhatsApp Bot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-bg': '#1a1a1a',
+                        'dark-card': '#2a2a2a',
+                        'dark-border': '#333333',
+                        'dark-text': '#e0e0e0',
+                        'dark-text-secondary': '#b0b0b0',
+                        'api-blue': '#4a9eff'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-bg text-dark-text min-h-screen">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <!-- Header Section -->
+        <header class="mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2">
+                        Dashboard API WhatsApp Bot
+                    </h1>
+                    <p class="text-dark-text-secondary text-sm sm:text-base">
+                        Kelola dan tambah API untuk kebutuhan WhatsApp bot
+                    </p>
+                </div>
+                <a href="../index.html" class="bg-dark-card hover:bg-dark-border border border-dark-border rounded-lg px-4 py-2 text-dark-text hover:text-white transition-colors duration-200">
+                    ← Kembali ke List
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                <div class="bg-dark-card border border-dark-border rounded-lg px-4 py-3 text-center sm:text-left">
+                    <div class="text-2xl sm:text-3xl font-bold text-api-blue" id="totalApis">0</div>
+                    <div class="text-dark-text-secondary text-sm">Total API</div>
+                </div>
+                <div class="bg-dark-card border border-dark-border rounded-lg px-4 py-3 text-center sm:text-left">
+                    <div class="text-2xl sm:text-3xl font-bold text-green-400" id="activeApis">0</div>
+                    <div class="text-dark-text-secondary text-sm">API Aktif</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Add API Form -->
+            <div class="bg-dark-card border border-dark-border rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                    <span class="text-xl">➕</span>
+                    Tambah API Baru
+                </h2>
+                
+                <form id="addApiForm" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-dark-text mb-2">Nama API</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            required
+                            class="w-full px-4 py-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-text-secondary focus:outline-none focus:ring-2 focus:ring-api-blue focus:border-transparent transition-all duration-200"
+                            placeholder="Contoh: Fgsl RestAPIs"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="developer" class="block text-sm font-medium text-dark-text mb-2">Developer</label>
+                        <input 
+                            type="text" 
+                            id="developer" 
+                            name="developer" 
+                            required
+                            class="w-full px-4 py-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-text-secondary focus:outline-none focus:ring-2 focus:ring-api-blue focus:border-transparent transition-all duration-200"
+                            placeholder="Contoh: FongsiDev"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="url" class="block text-sm font-medium text-dark-text mb-2">URL API</label>
+                        <input 
+                            type="url" 
+                            id="url" 
+                            name="url" 
+                            required
+                            class="w-full px-4 py-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-text-secondary focus:outline-none focus:ring-2 focus:ring-api-blue focus:border-transparent transition-all duration-200"
+                            placeholder="https://api.example.com/"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="status" class="block text-sm font-medium text-dark-text mb-2">Status</label>
+                        <select 
+                            id="status" 
+                            name="status" 
+                            required
+                            class="w-full px-4 py-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text focus:outline-none focus:ring-2 focus:ring-api-blue focus:border-transparent transition-all duration-200"
+                        >
+                            <option value="">Pilih Status</option>
+                            <option value="aktif">Aktif</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="inactive">Tidak Aktif</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="auth" class="block text-sm font-medium text-dark-text mb-2">Metode Auth</label>
+                        <input 
+                            type="text" 
+                            id="auth" 
+                            name="auth" 
+                            required
+                            class="w-full px-4 py-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-text-secondary focus:outline-none focus:ring-2 focus:ring-api-blue focus:border-transparent transition-all duration-200"
+                            placeholder="Contoh: API Key, Bearer Token, dll"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-dark-text mb-2">Deskripsi</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            rows="4" 
+                            required
+                            class="w-full px-4 py-3 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-text-secondary focus:outline-none focus:ring-2 focus:ring-api-blue focus:border-transparent transition-all duration-200 resize-none"
+                            placeholder="Deskripsi lengkap tentang API ini..."
+                        ></textarea>
+                    </div>
+                    
+                    <button 
+                        type="submit" 
+                        class="w-full bg-api-blue hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-api-blue focus:ring-offset-2 focus:ring-offset-dark-card"
+                    >
+                        Tambah API
+                    </button>
+                </form>
+            </div>
+
+            <!-- API List -->
+            <div class="bg-dark-card border border-dark-border rounded-lg p-6">
+                <h2 class="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                    <span class="text-xl">📋</span>
+                    Daftar API Terdaftar
+                </h2>
+                
+                <div id="apiList" class="space-y-4 max-h-96 overflow-y-auto">
+                    <!-- API items will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Success/Error Messages -->
+        <div id="message" class="fixed top-4 right-4 p-4 rounded-lg shadow-lg hidden z-50">
+        </div>
+    </div>
+
+    <script>
+        let apis = [];
+
+        function showMessage(text, type = 'success') {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' 
+                    ? 'bg-green-900 text-green-400 border border-green-700' 
+                    : 'bg-red-900 text-red-400 border border-red-700'
+            }`;
+            messageEl.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageEl.classList.add('hidden');
+            }, 3000);
+        }
+
+        function getStatusBadge(status) {
+            const statusConfig = {
+                'aktif': 'bg-green-900 text-green-400 border-green-700',
+                'maintenance': 'bg-yellow-900 text-yellow-400 border-yellow-700',
+                'inactive': 'bg-red-900 text-red-400 border-red-700'
+            };
+            const statusText = {
+                'aktif': 'Aktif',
+                'maintenance': 'Maintenance',
+                'inactive': 'Tidak Aktif'
+            };
+            return `<span class="px-2 py-1 text-xs font-medium rounded border ${statusConfig[status] || statusConfig.inactive}">${statusText[status] || status}</span>`;
+        }
+
+        function renderApiList() {
+            const apiList = document.getElementById('apiList');
+            
+            if (apis.length === 0) {
+                apiList.innerHTML = `
+                    <div class="text-center py-8 text-dark-text-secondary">
+                        <div class="text-4xl mb-2">📝</div>
+                        <p>Belum ada API yang terdaftar</p>
+                    </div>
+                `;
+                return;
+            }
+
+            apiList.innerHTML = apis.map(api => `
+                <div class="bg-dark-bg border border-dark-border rounded-lg p-4">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-semibold text-white">${api.name}</h3>
+                        <button onclick="deleteApi('${api._id}')" class="text-red-400 hover:text-red-300 text-sm">
+                            🗑️ Hapus
+                        </button>
+                    </div>
+                    <p class="text-sm text-dark-text-secondary mb-2">Developer: ${api.developer}</p>
+                    <p class="text-sm text-dark-text-secondary mb-2">Auth: ${api.auth}</p>
+                    <div class="mb-2">${getStatusBadge(api.status)}</div>
+                    <p class="text-xs text-dark-text-secondary line-clamp-2">${api.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const totalApis = apis.length;
+            const activeApis = apis.filter(api => api.status === 'aktif').length;
+            
+            document.getElementById('totalApis').textContent = totalApis;
+            document.getElementById('activeApis').textContent = activeApis;
+        }
+
+        async function loadApis() {
+            try {
+                const response = await fetch('/api/apis');
+                if (response.ok) {
+                    apis = await response.json();
+                    renderApiList();
+                    updateStats();
+                }
+            } catch (error) {
+                console.error('Error loading APIs:', error);
+            }
+        }
+
+        async function deleteApi(id) {
+            if (!confirm('Apakah Anda yakin ingin menghapus API ini?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/apis/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    showMessage('API berhasil dihapus!', 'success');
+                    loadApis();
+                } else {
+                    showMessage('Gagal menghapus API', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting API:', error);
+                showMessage('Terjadi kesalahan saat menghapus API', 'error');
+            }
+        }
+
+        // Form submission
+        document.getElementById('addApiForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const apiData = {
+                name: formData.get('name'),
+                developer: formData.get('developer'),
+                url: formData.get('url'),
+                status: formData.get('status'),
+                auth: formData.get('auth'),
+                description: formData.get('description')
+            };
+
+            try {
+                const response = await fetch('/api/apis', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(apiData)
+                });
+
+                if (response.ok) {
+                    showMessage('API berhasil ditambahkan!', 'success');
+                    e.target.reset();
+                    loadApis();
+                } else {
+                    const error = await response.json();
+                    showMessage(error.error || 'Gagal menambahkan API', 'error');
+                }
+            } catch (error) {
+                console.error('Error adding API:', error);
+                showMessage('Terjadi kesalahan saat menambahkan API', 'error');
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadApis);
+    </script>
+</body>
+</html>
