@@ -32,7 +32,7 @@ app.get("/list", (req, res) => {
 })
 
 // Get all APIs
-app.get("/api/apis", async (req, res) => {
+app.get("/api/api", async (req, res) => {
   try {
     const apis = await db.collection("apiss").find({}).toArray()
     res.json(apis)
