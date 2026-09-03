@@ -7,14 +7,12 @@ const app = express()
 const PORT = process.env.PORT || 3000
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb+srv://Maulanaa:5q1PrEZUUJkY4ioF@cluster0.rgcpg7g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-// Middleware
 app.use(cors())
 app.use(express.json())
 app.use(express.static("public"))
 
 let db
 
-// Connect to MongoDB
 MongoClient.connect(MONGODB_URI)
   .then((client) => {
     console.log("Connected to MongoDB")
@@ -22,7 +20,7 @@ MongoClient.connect(MONGODB_URI)
   })
   .catch((error) => console.error("MongoDB connection error:", error))
 
-// Routes
+
 app.get("/add/admin", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "dashboard.html"))
 })
@@ -31,7 +29,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"))
 })
 
-// Get all APIs
 app.get("/api/api", async (req, res) => {
   try {
     const apis = await db.collection("apiss").find({}).toArray()
@@ -41,7 +38,7 @@ app.get("/api/api", async (req, res) => {
   }
 })
 
-// Add new API
+
 app.post("/api/apis", async (req, res) => {
   try {
     const { name, developer, url, status, description, auth } = req.body
@@ -67,7 +64,7 @@ app.post("/api/apis", async (req, res) => {
   }
 })
 
-// Delete API
+
 app.delete("/api/apis/:id", async (req, res) => {
   try {
     const { ObjectId } = require("mongodb")
@@ -83,7 +80,7 @@ app.delete("/api/apis/:id", async (req, res) => {
   }
 })
 
-// Start the server
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
